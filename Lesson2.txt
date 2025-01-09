@@ -1,0 +1,34 @@
+Objective:
+===========
+Loading the browser
+
+public class BrowserLaunch {
+
+	public static void main(String[] args) {
+		
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.google.com");
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		
+
+		String title = driver.getTitle();
+		System.out.println(title);
+		
+		String currentUrl = driver.getCurrentUrl();
+		System.out.println(currentUrl);
+		
+		
+		String pageSource = driver.getPageSource();
+		System.out.println(pageSource);
+		
+		
+	
+		
+		driver.close();
+		
+		driver.quit();
+		
+
+	}
+}

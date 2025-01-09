@@ -1,0 +1,66 @@
+Objective:
+==========
+
+Locator
+
+
+
+Locators(8)
+-----------
+id            -attribute
+name          -attribute
+linkText      -attribute
+classname     -attribute
+partialLinkText
+tagname
+xpath
+css
+
+
+xpath
+-------
+1.AbsoluteXpath : need to traverse from root  - /
+2.RelativeXpath :  //
+
+2.1: Basic xpath
+----------------
+1.Attribute based Xpath
+------------------------
+
+    //tagName[@attributeName='value']
+
+    Multiple Attributes:
+    //input[@class='input'][@id='username']
+    //input[@Class='input'and @id='username']
+    //input[@class-'input'or @id='username']
+
+2.Text based xpath
+--------------------
+
+    //tagName[text()='textvalue']
+    //a[text()='crm/sfa']
+
+3.Partial Attribute Based xpath
+-------------------------------
+
+
+    //tagName[contains(@attributeName,'attributeName')]
+
+4.Partial Text Based xpath
+----------------------------
+
+
+        //tagName[contains(text(),'crm/sfs')]
+
+5.Index Based / Collection based xpath
+---------------------------------------
+
+    (//input[attributeName='value'])[indexno]
+
+
+When white space exist
+-----------------------
+//tagname[text()[normalize-space()='crm/sfa']]
+
+
+//tagname[contains(text(),'CRM/SFA') AND @id='userName']

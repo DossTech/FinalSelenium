@@ -1,0 +1,60 @@
+Day1:
+====
+What is the need for automation?
+
+Objective:
+=========
+What is java
+JavaBasics
+Control statements
+
+Software Testing:
+=================
+1.Manual Testing : To ensure the developed product / appp matching the client requirement
+2.Automation Testing:
+
+Selenium:
+=========
+    Selenium can automate webbased applications
+    Can't automate desktop app.
+    Java,C#,JS,python,Ruby,Perl,PHP
+    Java is matured language - libraries for UI based interaction
+
+IDE:
+====
+Integrated Development Environment
+Tool to right the code - 
+
+Class:
+=====
+Its a blueprint / template
+Which has features and functions -  or group of objects
+
+
+Selenium:
+========
+It - chemiclelement - 2004
+UFT - Mercurycom
+
+Jason Huggins
+Steven Steward
+Selenium is open source
+Only for Web applications
+Multiple languages
+Works with window, mac....
+Works with multiple browser
+
+UFT is for commercial 
+Multiple app VBscript / Javascript
+Can't execute the MAC/Linux
+
+
+Other tool:
+==========
+1.Cypress       - chrome, firefox
+2.PlayWright
+3.Puppetter     - JS / chrome
+4.WebDriver.IOS
+
+
+
