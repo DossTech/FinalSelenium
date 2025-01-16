@@ -64,3 +64,47 @@ When white space exist
 
 
 //tagname[contains(text(),'CRM/SFA') AND @id='userName']
+
+Advanced Xpath
+===============
+Parent to child
+grandparent and grandchild
+siblings
+cousings
+
+1.Parent to child
+-----------------
+//form[@id='Login']/p[2]
+
+2.Child to Parent
+------------------
+basic xpath/parent::tagname
+//input[@id='password']/parent::rp
+
+3.Grandparent and GrandChild
+----------------------------
+basic xpath//tagname
+//form[@id='login']//input[@id='password']
+
+4.GrandChild to GrandParent
+----------------------------
+basic xpath/ancestor::tagname
+//input[@id='password']/ancestor::tagname
+
+5.Elder to younger sibling
+---------------------------
+basic xpath/following-sibling::tagname
+
+6.younger to elder sibling
+----------------------------
+basic xpath/preceding-sibling::tagname
+
+7.Elder to another sibling
+--------------------------
+basic xpath/following::tagname
+
+8.Younger to Elder sibling
+--------------------------
+basic xpath/preceding::tagname
+
+
