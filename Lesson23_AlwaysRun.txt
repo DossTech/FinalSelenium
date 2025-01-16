@@ -1,0 +1,35 @@
+package org.testcases;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+public class BaseClass {
+
+	public static WebDriver driver;
+
+	@BeforeMethod(alwaysRun=true) // instead of :  	@BeforeMethod(groups={"Regression","Smoke"})
+	public void beforeMethod() {
+		driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+		// user and password
+		driver.findElement(By.id("username")).sendKeys("demosalesmanager");
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+
+		// clicking the login
+		driver.findElement(By.className("decorativeSubmit")).click();
+		// clicking the crmsfa
+		driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+	}
+
+	@AfterMethod(alwaysRun=true)
+	public void afterMethod() {
+		driver.close();
+	}
+}
