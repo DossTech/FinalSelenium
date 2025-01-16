@@ -1,0 +1,33 @@
+package org.example;
+
+import org.openqa.selenium.NoSuchElementException;
+import org.testng.annotations.Test;
+
+@Test
+public class Sample {
+
+	@Test(expectedExceptions=ArithmeticException.class)
+	public void createLead() {
+
+		System.out.println("3/0");
+		throw new ArithmeticException("CreateLead");
+	}
+	
+	
+
+}
+
+<==========================================================>
+3/0
+PASSED: org.example.Sample.createLead
+
+===============================================
+    Default test
+    Tests run: 1, Failures: 0, Skips: 0
+===============================================
+
+
+===============================================
+Default suite
+Total tests run: 1, Passes: 1, Failures: 0, Skips: 0
+===============================================
