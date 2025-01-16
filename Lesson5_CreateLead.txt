@@ -1,1 +1,39 @@
+public class CreateLead {//10196
+
+	@Test
+	public  void createLead() {
+
+		WebDriver driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+		// user and password
+		driver.findElement(By.id("username")).sendKeys("demosalesmanager");
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+
+		// clicking the login
+		driver.findElement(By.className("decorativeSubmit")).click();
+
+		// clicking the crmsfa
+		driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+
+		// clicking on the Lead menu
+		driver.findElement(By.linkText("Leads")).click();
+
+		// clicking the CreateLead button
+		driver.findElement(By.linkText("Create Lead")).click();
+
+		// firstName
+		driver.findElement(By.id("createLeadForm_firstName")).sendKeys("firstName");
+
+		// lastName
+		driver.findElement(By.id("createLeadForm_lastName")).sendKeys("lastName");
+
+		// companyName
+		driver.findElement(By.id("createLeadForm_companyName")).sendKeys("VBC");
+
+		// clicking createLead button
+		driver.findElement(By.name("submitButton")).click();
+	}
+}
 
