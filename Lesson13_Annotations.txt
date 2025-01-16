@@ -1,0 +1,9 @@
+@BEforeSuite--Starting a report
+  @BEforeTest--retrieving a data from module-purpose
+    @BEforeClass--execute before all classes,Include the test in testreport
+      @BEforeMethod--Login
+        @Test-------Mandatory
+      @AfterMethod
+    @AfterClass
+  @AfterTest
+@AfterSuite
