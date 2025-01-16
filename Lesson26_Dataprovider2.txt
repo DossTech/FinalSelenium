@@ -1,0 +1,67 @@
+How to Read data from Excel
+=============================
+
+Dependencies:
+=============
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>4.1.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>4.1.2</version>
+</dependency>
+
+<==============================================>
+
+xls-->2003
+xlsx->2003 after
+
+Create an Excel Sheet-->paste in project--->in a folder"data"
+
+<===============================================>
+
+package org.testcases;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class ReadExcel {
+
+	public static void main(String[] args) throws IOException {
+		
+		FileInputStream file = new FileInputStream(".\\data\\CreateLead.xlsx");
+		
+		XSSFWorkbook book = new XSSFWorkbook(file);
+		
+		XSSFSheet sheet = book.getSheet("Sheet1");
+		
+		int rows = sheet.getLastRowNum();
+		System.out.println(rows);
+		
+		int totalRows = sheet.getPhysicalNumberOfRows();
+		System.out.println(totalRows);
+		
+		for (int i = 1; i <=rows; i++) {
+			short cells = sheet.getRow(0).getLastCellNum();
+			int totalCells = sheet.getRow(0).getPhysicalNumberOfCells();
+			
+			for (int j = 0; j <cells; j++) {
+			XSSFCell cell = sheet.getRow(i).getCell(j);
+			System.out.println(cell);
+			}
+	
+		}
+		
+	}
+}
+
+
