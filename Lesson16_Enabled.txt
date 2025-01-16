@@ -1,0 +1,45 @@
+package org.example;
+
+import org.testng.annotations.Test;
+
+public class Sample {
+
+	@Test(enabled=false)
+	private void createLead() {
+
+		System.out.println("CreateLead");
+
+	}
+
+	@Test(enabled=true)
+	private void editLead() {
+
+		System.out.println("EditLead");
+
+	}
+
+	@Test(enabled=false)
+	private void deleteLead() {
+
+		System.out.println("DeleteLead");
+
+	}
+}
+
+
+<=============================================>
+
+EditLead
+PASSED: org.example.Sample.editLead
+
+===============================================
+    Default test
+    Tests run: 1, Failures: 0, Skips: 0
+===============================================
+
+
+===============================================
+Default suite
+Total tests run: 1, Passes: 1, Failures: 0, Skips: 0
+===============================================
+
