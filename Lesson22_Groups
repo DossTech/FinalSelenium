@@ -1,0 +1,69 @@
+package org.example;
+
+import org.openqa.selenium.NoSuchElementException;
+import org.testng.annotations.Test;
+
+@Test
+public class Sample {
+
+	@Test(groups="Regression")
+	public void createLead() {
+
+		System.out.println("CreateLead");
+	}
+
+	@Test(groups="Sanity")
+	public void editLead() {
+
+		System.out.println("EditLead");
+	}
+
+	@Test(groups="Smoke")
+	public void deleteLead() {
+		
+		System.out.println("DeleteLead");
+		
+	}
+	
+	@Test(groups="Unity")
+	public void duplicateLead() {
+		
+		System.out.println("DuplicateLead");
+
+	}
+
+
+}
+<============================================>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+<groups>
+<run>
+<include name="Regression"></include>
+<include name="Sanity"></include>
+<include name="Smoke"></include>
+<exclude name="Unity"></exclude>
+</run>
+</groups>
+	<test thread-count="5" name="Test">
+		<classes>
+			<class name="org.example.Sample" />
+		</classes>
+	</test> <!--
+	Test -->
+</suite> <!--
+Suite -->
+
+<============================================>
+
+CreateLead
+DeleteLead
+EditLead
+
+===============================================
+Suite
+Total tests run: 3, Passes: 3, Failures: 0, Skips: 0
+===============================================
+
+<===============================================>
