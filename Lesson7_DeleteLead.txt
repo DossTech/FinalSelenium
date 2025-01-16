@@ -1,0 +1,40 @@
+public class DeleteLead {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		WebDriver driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+		// user and password
+		driver.findElement(By.id("username")).sendKeys("demosalesmanager");
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+
+		// clicking the login
+		driver.findElement(By.className("decorativeSubmit")).click();
+
+		// clicking the crmsfa
+		driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+
+		// clicking on the Lead menu
+		driver.findElement(By.linkText("Leads")).click();
+		
+		//clicking the findleads
+		driver.findElement(By.xpath("//a[text()='Find Leads']")).click();
+		
+		Thread.sleep(3000);
+		//finding the companyname
+		driver.findElement(By.xpath("(//input[@name=\"companyName\"])[2]")).sendKeys("VBC");
+
+		//clicking the button
+		driver.findElement(By.xpath("//button[text()='Find Leads']")).click();
+		
+		Thread.sleep(3000);
+		//clicking the option
+		driver.findElement(By.xpath("//table[@class='x-grid3-row-table']//td[1]//a")).click();
+		
+		driver.findElement(By.xpath("//a[text()='Delete']")).click();
+		
+		
+	}
+}
