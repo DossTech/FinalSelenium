@@ -12,7 +12,7 @@ public class Sample {
 		System.out.println("CreateLead");
 	}
 
-	@Test(dependsOnMethods="createLead")
+	@Test(dependsOnMethods="createLead")    //from other package: packagename.classname.methodname()
 	public void editLead() {
 
 		System.out.println("EditLead");
