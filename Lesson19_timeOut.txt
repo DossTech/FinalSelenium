@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class Sample {
 
-	@Test(timeOut=10)
+	@Test(timeOut=10)  //milliseconds
 	private void createLead() {
 
 		System.out.println("CreateLead");
