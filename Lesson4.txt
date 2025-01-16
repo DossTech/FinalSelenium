@@ -1,1 +1,19 @@
+TestNG:
+-------
+1.Featured to execute testcases sequentially
+2.Featured to execute testcases parallely
+3.Gives the status at the end of each status
+4.Given execution summary report(HTML Report)
+5.Support Data Driven - to execute with multiple daa
+6.Support cross browser testing
+7.Can control the execution flow with certain annotations and attributes
+8.Provides Listeners (Retry failed testcases)
+9.Assertions to handle validations and verifications
+
+
+Dependencies:
+--------------
+1.Selenium-java
+2.TestNG : 7.4.0
+
 
