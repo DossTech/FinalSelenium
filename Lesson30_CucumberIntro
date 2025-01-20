@@ -1,14 +1,77 @@
+Cucumber - BDD Framework
+=========================
+Test Driven Development:
+    1.Wrote the TC first then developed the product
+
+Acceptance Test Driven Development
+    1.Write thte user acceptance TC
+
+Behavioural Driven Development
+    1.Common Language / terms - Gherkin
+
+"Getting the wotds right" is the focus of BDD
+
+Gherkin is the language that cucumber understands -
+"Business Readable, Domain Specific Language"
+
+KEYWORDS:
+=========
+1.Feature        1.Then          1.Scenario Outline
+2.Background     2.And           2.Examples
+3.Scenario       3.But
+4.Given
+5.When
+
+Festure: Description of the functionality
+Scenario: Testcase Description
+Precondition - Given
+Test Step/test condition - When
+Expected Result (Positive) - Then
+Expected Result (Negative) - But
+
 Dependencies:
 =============
 1.Cucumber-testNG = 6.8.0
 2.Cucumber-java = 6.8.0
 
+Plugins:
+============
+Cucumber
+nautural
+
+Execution Framework
+==================
+TestNG
+Junit
+
 
 Layers:
-========
-1.features
-2.stepdefinition
-3.runner
+======== 
+1.features        -Gherkins
+2.stepdefinition  - Javamethods
+3.runner          -TestNG
+
+
+Given Launch the browser
+And  Load the application url
+And  Enter username as Demosalesmanage
+And Enter password as crmsfa
+When Click on Login button
+Then Homepage should be displayed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
