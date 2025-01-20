@@ -1,0 +1,99 @@
+package org.testcases;
+
+import java.io.IOException;
+import java.util.Date;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+public class CreateLead extends BaseClass{//10196
+
+	@Test(dataProvider = "testData1")
+	public  void createLead(String first,String last,String company) {
+
+		// clicking on the Lead menu
+		driver.findElement(By.linkText("Leads")).click();
+
+		// clicking the CreateLead button
+		driver.findElement(By.linkText("Create Lead")).click();
+
+		// firstName
+		driver.findElement(By.id("createLeadForm_firstName")).sendKeys(first);
+
+		// lastName
+		driver.findElement(By.id("createLeadForm_lastName")).sendKeys(last);
+
+		// companyName
+		driver.findElement(By.id("createLeadForm_companyName")).sendKeys(company);
+
+		// clicking createLead button
+		driver.findElement(By.name("submitButton")).click();
+	
+	}
+	
+	
+	@DataProvider(name= "testData1")
+	public String[][] sendData() throws IOException {
+	
+		/*String data[][] = new String[2][3];
+		data[0][0]="firstName1";
+		data[0][1]="lastName1";
+		data[0][2]="VBC1";
+
+		data[1][0]="firstName2";
+		data[1][1]="lastName2";
+		data[1][2]="VBC2";
+		
+		return data;
+		
+			*/
+		
+		return ReadExcel.readExcel("CreateLead");
+	}
+
+}
+<=======================================================>
+
+package org.testcases;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class ReadExcel {
+
+	public static String[][] readExcel(String fileName) throws IOException {
+		
+		FileInputStream file = new FileInputStream(".\\data\\"+fileName+".xlsx");
+		
+		XSSFWorkbook book = new XSSFWorkbook(file);
+		
+		XSSFSheet sheet = book.getSheet("Sheet1");
+		
+		int rows = sheet.getLastRowNum();
+		System.out.println(rows);
+		
+		int totalRows = sheet.getPhysicalNumberOfRows();
+		System.out.println(totalRows);
+		short cells = sheet.getRow(0).getLastCellNum();
+		int totalCells = sheet.getRow(0).getPhysicalNumberOfCells();
+		
+		String[][] data = new String[rows][cells];
+		
+		for (int i = 1; i <=rows; i++) {
+			for (int j = 0; j <cells; j++) {
+			XSSFCell cell = sheet.getRow(i).getCell(j);
+		//	System.out.println(cell);
+			String cellValue = cell.getStringCellValue();		
+	        data[i-1][j] = cellValue;
+		}
+		
+	}
+book.close();
+return data;
+}
+}
