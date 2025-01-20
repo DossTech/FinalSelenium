@@ -1,0 +1,89 @@
+Feature: Leaftaps Login functionality
+
+
+Scenario: TC001 Login to application - Positive
+
+Given Launch the browser
+And  Load the application url
+And  Enter username as Demosalesmanage
+And Enter password as crmsfa
+When Click on Login button
+Then Homepage should be displayed
+
+
+<=========================================================>
+
+
+package runner;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.CucumberOptions.SnippetType;
+
+@CucumberOptions(features={"src\\test\\java\\features"},
+glue= "stepdefinition" ,
+monochrome=true ,
+dryRun=false,
+snippets = SnippetType.CAMELCASE,
+publish=true
+
+)
+public class Runner extends AbstractTestNGCucumberTests{
+
+}
+
+
+<=======================================================>
+
+package stepdefinition;
+
+import java.time.Duration;
+
+import org.jspecify.annotations.Nullable;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class Login {
+
+	public static WebDriver driver;
+
+@Given("Launch the browser")
+public void launchthebrowser() {
+	driver = new ChromeDriver();
+}
+
+@And("Load the application url")
+public void loadtheapplicationurl() {
+	driver.get("http://leaftaps.com/opentaps/control/main");
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+}
+
+@And("Enter username as Demosalesmanage")
+public void enterusernameasdemosalesmanage() {
+	driver.findElement(By.id("username")).sendKeys("demosalesmanager");
+}
+
+@And("Enter password as crmsfa")
+public void enterpasswordascrmsfa() {
+	driver.findElement(By.id("password")).sendKeys("crmsfa");
+}
+
+@When("Click on Login button")
+public void clickonloginbutton() {
+	driver.findElement(By.className("decorativeSubmit")).click();
+	driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+}
+
+@Then("Homepage should be displayed")
+public void homepageshouldbedisplayed() {
+   String title = driver.getTitle();
+   System.out.println(title);
+}
+}
