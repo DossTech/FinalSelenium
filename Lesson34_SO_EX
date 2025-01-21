@@ -1,0 +1,108 @@
+Feature: Leaftaps Login functionality
+
+  Background: 
+    Given Launch the browser
+    And Load the application url
+
+  Scenario Outline: TC001 Login to application - Positive
+    And Enter username as <userName>
+    And Enter password as <password>
+    When Click on Login button
+    Then Homepage should be displayed
+
+    Examples: 
+      | userName          | password |
+      | 'DemoSalesManager' | 'crmsfa'   |
+      | 'DemoCSR'          | 'crmsfa'   |
+      
+ Scenario: TC002 Login to application - Negative
+  And Enter username as 'Demosalesmanager1'
+   And Enter password as 'crmsfa'
+   When Click on Login button
+    Then Homepage should be displayed
+<===================================================================>
+
+package stepdefinition;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class Login{
+
+	public static WebDriver driver;
+
+@Given("Launch the browser")
+public void launchthebrowser() {
+	driver = new ChromeDriver();
+}
+
+@And("Load the application url")
+public void loadtheapplicationurl() {
+	driver.get("http://leaftaps.com/opentaps/control/main");
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+}
+
+@And("Enter username as {string}")
+public void enterusername(String userName) {
+	driver.findElement(By.id("username")).sendKeys(userName);
+}
+
+
+/*@Given("Enter username as {string}")
+public void enterUsername(String userName1) {
+	driver.findElement(By.id("username")).sendKeys(userName1);
+}
+*/
+
+@And("Enter password as {string}")
+public void enterpassword(String password) {
+	driver.findElement(By.id("password")).sendKeys(password);
+}
+/*
+@And("Enter password as {string}")
+public void enterpassword(String password) {
+	driver.findElement(By.id("password")).sendKeys(password);
+}
+*/
+@When("Click on Login button")
+public void clickOnLoginButton() {
+	driver.findElement(By.className("decorativeSubmit")).click();
+	driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+}
+
+@Then("Homepage should be displayed")
+public void homepageshouldbedisplayed() {
+   String title = driver.getTitle();
+   System.out.println(title);
+}
+
+}
+
+<===========================================================>
+
+package runner;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.CucumberOptions.SnippetType;
+
+@CucumberOptions(features={"src\\test\\java\\features"},
+glue= "stepdefinition" ,
+monochrome=true ,
+dryRun=false,
+snippets = SnippetType.CAMELCASE,
+publish=true
+
+)
+public class Runner extends AbstractTestNGCucumberTests{
+
+}
