@@ -1,0 +1,17 @@
+Feature: Leaftaps Login functionality
+
+  Background: 
+    Given Launch the browser
+    And Load the application url
+
+  Scenario: TC001 Login to application - Positive
+    And Enter username as Demosalesmanage
+    And Enter password as crmsfa
+    When Click on Login button
+    Then Homepage should be displayed
+
+  Scenario: TC002 Login to application - Negative
+    And Enter username as Demosalesmanage1
+    And Enter password as crmsfa
+    When Click on Login button
+    Then Homepage should be displayed
