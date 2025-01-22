@@ -1,0 +1,187 @@
+1.Remove Hooks and move your precondition and post condition to your BAseClass
+2.Extend BaseClass in Runner and AbstractTestNGCucumberTests in BaseClass
+3.Apply @Functional to 1st Scenario
+        @Smoke to 2nd Scenario
+        @Regression and @Smoke to 3rd Scenario
+
+
+<======================================================================================>
+Feature: Create Lead functionality
+
+  @Functional
+  Scenario: CreateLead with mandatory informations - Positive 1
+    Given Enter  username as 'Demosalesmanager'
+    And Enter  password as 'crmsfa'
+   When Click on login  button
+   Then Homepage should be displayed
+    When Click on 'CRM/SFA' link
+    Then 'My Home' Page should be displayed
+    When Click on 'Leads' link
+    Then 'My Leads' Page should be displayed
+    When Click on 'Create Lead' link
+    Then 'Create Lead' Page should be displayed
+
+  @Smoke
+  Scenario: CreateLead with mandatory informations  - Positive 2
+    Given Enter  username as 'Demosalesmanager'
+    And Enter  password as 'crmsfa'
+    When Click on login  button
+    Then Homepage should be displayed
+    When Click on 'CRM/SFA' link
+    Then 'My Home' Page should be displayed
+    When Click on 'Leads' link
+    Then 'My Leads' Page should be displayed
+    When Click on 'Create Lead' link
+    Then 'Create Lead' Page should be displayed
+<==================================================================================>
+
+package runner;
+
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.CucumberOptions.SnippetType;
+import stepdefinition.BaseClass;
+
+@CucumberOptions(features={"src/test/java/features"},
+glue= "stepdefinition" ,
+monochrome=true ,
+dryRun=false,
+snippets = SnippetType.CAMELCASE,
+publish=true,
+//tags="@Functional"//  executing a particular tag
+//tags="@Smoke"//  executing a particular tag
+//tags="@Functional or @Smoke"// executing all tags
+tags="@Functional and @Smoke"// executing  tags
+//tags="not @Smoke" 
+)
+public class Runner extends BaseClass{
+
+}
+
+<=================================================================================>
+
+package stepdefinition;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+
+public class BaseClass extends AbstractTestNGCucumberTests {
+
+	public static WebDriver driver;
+	public String fileName;
+
+	// @Parameters({"url","userName","passWord"})
+	@BeforeMethod()
+	public void beforeMethod() {
+		driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+		// user and password
+		// driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+		// driver.findElement(By.id("password")).sendKeys("crmsfa");
+
+		// clicking the login
+		// driver.findElement(By.className("decorativeSubmit")).click();
+		// clicking the crmsfa
+//	driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+	}
+
+	@AfterMethod()
+	public void afterMethod() {
+		driver.close();
+	}
+
+	/*
+	 * @DataProvider(name= "testData1") public String[][] sendData() throws
+	 * IOException {
+	 * 
+	 * String data[][] = new String[2][3]; data[0][0]="firstName1";
+	 * data[0][1]="lastName1"; data[0][2]="VBC1";
+	 * 
+	 * data[1][0]="firstName2"; data[1][1]="lastName2"; data[1][2]="VBC2";
+	 * 
+	 * return data;
+	 * 
+	 * 
+	 * 
+	 * return ReadExcel.readExcel(fileName); }
+	 */
+}
+
+
+<===========================================================================================>
+
+package stepdefinition;
+
+import org.jspecify.annotations.Nullable;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class CreateLead extends BaseClass{
+
+	@Given("Enter  username as {string}")
+	public void enterTheUsernameAs(String userName) {
+		driver.findElement(By.id("username")).sendKeys(userName);
+	}
+
+
+@And("Enter  password as {string}")
+public void enterThePasswordAs(String password) {
+	driver.findElement(By.id("password")).sendKeys(password);
+}
+
+
+@When("Click on login  button")
+public void clickOnLoginButton() {
+	driver.findElement(By.className("decorativeSubmit")).click();
+	//driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+}	
+
+@Then("Homepage should be displayed")
+public void homepageShouldBeDisplayed() {
+  String title = driver.getTitle();
+  if (title.contains("TestLead")) {
+	System.out.println("Login Successful");
+} else {
+	System.out.println("Login Not Successful");
+}
+}
+	
+	
+
+
+	
+	
+	
+	
+	@When("Click on {string} link")
+	public void clickLink (String string) {
+		driver.findElement(By.linkText(string)).click();
+	}
+
+
+@Then("{string} Page should be displayed")
+public void pageshouldbedisplayed(String string) {
+	boolean displayed = driver.findElement(By.linkText(string)).isDisplayed();
+	if (displayed) {
+		System.out.println("Success");
+	} else {
+		System.out.println("Failure");
+	}
+}
+
+	
+}
+<==============================================================================================>
