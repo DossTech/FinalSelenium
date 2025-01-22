@@ -1,0 +1,132 @@
+Feature: Leaftaps Login functionality
+
+  #Background: 
+  #Given Launch the browser
+ #And Load the application url
+@Functional
+Scenario Outline: TC001 Login to application - Positive
+    Given Enter username as <userName>
+    And Enter password as <password>
+    When Click on Login button
+    Then Homepage should be displayed
+
+ Examples: 
+      | userName          | password |
+      | 'DemoSalesManager' | 'crmsfa'   |
+      | 'DemoCSR'          | 'crmsfa'   |
+    
+      
+#Scenario: TC002 Login to application - Negative
+ #And Enter username as 'Demosalesmanager1'
+ #And Enter password as 'crmsfa'
+ #When Click on Login button
+ #Then Homepage should be displayed
+
+
+<====================================================================>
+package runner;
+
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.CucumberOptions.SnippetType;
+import stepdefinition.BaseClass;
+
+@CucumberOptions(features={"src/test/java/features/Login.feature"},
+glue= "stepdefinition" ,
+monochrome=true ,
+dryRun=false,
+snippets = SnippetType.CAMELCASE,
+publish=true,
+tags="@Functional"//  executing a particular tag
+//tags="@Functional or @Smoke", executing all tags
+//tags="@Functional and @Smoke" executing  tags
+//tags="not @Smoke" 
+)
+public class Runner extends BaseClass{
+
+}
+
+<======================================================================>
+
+
+package stepdefinition;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+
+public class BaseClass extends AbstractTestNGCucumberTests{
+
+	public static WebDriver driver;
+	public String fileName;
+
+	//@Parameters({"url","userName","passWord"})
+	@BeforeMethod()
+	public void beforeMethod() {
+		driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+	
+
+	@AfterMethod()
+	public void afterMethod() {
+		driver.close();
+	}
+
+	
+
+}
+
+<======================================================================>
+
+package stepdefinition;
+
+import org.openqa.selenium.By;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class Login extends BaseClass{
+
+	//public static WebDriver driver;
+
+@Given("Enter username as {string}")
+public void enterusername(String userName) {
+	driver.findElement(By.id("username")).sendKeys(userName);
+}
+
+
+@And("Enter password as {string}")
+public void enterpassword(String password) {
+	driver.findElement(By.id("password")).sendKeys(password);
+}
+
+@When("Click on Login button")
+public void clickOnLoginButton() {
+	driver.findElement(By.className("decorativeSubmit")).click();
+	driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+}
+
+@Then("Homepage should be displayed")
+public void homepageshouldbedisplayed() {
+   String title = driver.getTitle();
+if (title.contains("TestLeaf")) {
+	System.out.println("Login Successful");
+} else {
+	System.out.println("Login Not Successful");
+}
+}
+
+}
+
+<=============================================================================>
+
+
