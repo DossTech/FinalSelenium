@@ -1,0 +1,156 @@
+DETERMINATION, CONSISTENCY, NEVERGIVINGUP
+
+Hooks annotation non inheritable
+<===================================================================>
+package stepdefinition;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+
+public class BaseClass extends AbstractTestNGCucumberTests{
+
+	public static WebDriver driver;
+	public String fileName;
+
+	//@Parameters({"url","userName","passWord"})
+	@BeforeMethod()
+	public void beforeMethod() {
+		driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+		// user and password
+	//	driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+	//	driver.findElement(By.id("password")).sendKeys("crmsfa");
+
+		// clicking the login
+	//	driver.findElement(By.className("decorativeSubmit")).click();
+		// clicking the crmsfa
+		//driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+	}
+
+	@AfterMethod()
+	public void afterMethod() {
+		driver.close();
+	}
+
+	/*
+	@DataProvider(name= "testData1")
+	public String[][] sendData() throws IOException {
+
+		String data[][] = new String[2][3];
+		data[0][0]="firstName1";
+		data[0][1]="lastName1";
+		data[0][2]="VBC1";
+
+		data[1][0]="firstName2";
+		data[1][1]="lastName2";
+		data[1][2]="VBC2";
+
+		return data;
+
+
+
+		return ReadExcel.readExcel(fileName);
+	}
+	 */
+}
+<===========================================================================>
+
+
+Feature: Leaftaps Login functionality
+
+  #Background: 
+  #Given Launch the browser
+ #And Load the application url
+@Functional
+Scenario Outline: TC001 Login to application - Positive
+    Given Enter username as <userName>
+    And Enter password as <password>
+    When Click on Login button
+    Then Homepage should be displayed
+
+ Examples: 
+      | userName          | password |
+      | 'DemoSalesManager' | 'crmsfa'   |
+    | 'DemoCSR'          | 'crmsfa'   |
+      
+ #Scenario: TC002 Login to application - Negative
+ # And Enter username as 'Demosalesmanager1'
+   #And Enter password as 'crmsfa'
+   #When Click on Login button
+    #Then Homepage should be displayed
+<=====================================================================>
+
+package stepdefinition;
+
+import org.openqa.selenium.By;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class Login extends BaseClass{
+
+	//public static WebDriver driver;
+/*
+@Given("Launch the browser")
+public void launchthebrowser() {
+	driver = new ChromeDriver();
+}
+
+@And("Load the application url")
+public void loadtheapplicationurl() {
+	driver.get("http://leaftaps.com/opentaps/control/main");
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+}
+*/
+@And("Enter username as {string}")
+public void enterusername(String userName) {
+	driver.findElement(By.id("username")).sendKeys(userName);
+}
+
+
+/*@Given("Enter username as {string}")
+public void enterUsername(String userName1) {
+	driver.findElement(By.id("username")).sendKeys(userName1);
+}
+*/
+
+@And("Enter password as {string}")
+public void enterpassword(String password) {
+	driver.findElement(By.id("password")).sendKeys(password);
+}
+/*
+@And("Enter password as {string}")
+public void enterpassword(String password) {
+	driver.findElement(By.id("password")).sendKeys(password);
+}
+*/
+@When("Click on Login button")
+public void clickOnLoginButton() {
+	driver.findElement(By.className("decorativeSubmit")).click();
+	driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+}
+
+@Then("Homepage should be displayed")
+public void homepageshouldbedisplayed() {
+   String title = driver.getTitle();
+if (title.contains("TestLeaf")) {
+	System.out.println("Login Successful");
+} else {
+	System.out.println("Login Not Successful");
+}
+}
+
+}
+
+<=============================================================================>
