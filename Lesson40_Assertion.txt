@@ -1,0 +1,12 @@
+Assertion:
+===========
+Verification / validation
+Comparing the results (actual with expected )
+Normaly we do by Control statements
+
+
+Types:
+======
+Hard Assertion - Execution will be terminated as soon as the condition is failed
+Soft Assertion - Execution will not be terminated as soon the condition is failes. but at the
+                 end ... due to assertAll() at the end will make fail....
