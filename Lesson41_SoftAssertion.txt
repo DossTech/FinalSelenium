@@ -1,0 +1,144 @@
+package learnassertion;
+
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+
+public class BaseClass {
+	public static WebDriver driver;
+	public String fileName;
+
+	@BeforeMethod(alwaysRun=true)
+	public void beforeMethod() {
+		driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+		driver.findElement(By.className("decorativeSubmit")).click();
+		driver.findElement(By.xpath("//a[text()[normalize-space() ='CRM/SFA']]")).click();
+
+		String title = driver.getTitle();
+
+		Assert.assertEquals(title, "My Home | opentaps CRM");
+		
+	}
+
+	@AfterMethod
+	public void afterMethod() {
+		driver.close();
+
+	}
+	@DataProvider(name="testdata1")
+		public String[][] sendData() throws IOException {
+		
+		return ReadExcel.readExcel(fileName);
+	}
+}
+
+<================================================================================>
+package learnassertion;
+
+import org.jspecify.annotations.Nullable;
+import org.openqa.selenium.By;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+public class CreateLead extends BaseClass {
+
+	@BeforeClass
+	public void setUp() {
+
+		fileName = "CreateLead";
+
+	}
+
+	@Test(dataProvider = "testdata1")
+	public void createLead(String firstName, String secondName, String CompanyName) {
+
+		driver.findElement(By.linkText("Leads")).click();
+		driver.findElement(By.linkText("Create Lead")).click();
+		SoftAssert sa = new SoftAssert();
+
+		String title = driver.getTitle();
+
+		sa.assertEquals(title, "Create Lead | opentaps CRM");
+
+		// firstName
+		driver.findElement(By.id("createLeadForm_firstName")).sendKeys(firstName);
+
+		// lastName
+		driver.findElement(By.id("createLeadForm_lastName")).sendKeys(secondName);
+
+		// companyName
+		driver.findElement(By.id("createLeadForm_companyName")).sendKeys(CompanyName);
+
+		sa.assertAll();
+	}
+}
+
+
+<================================================================================>
+package learnassertion;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.annotations.Test;
+
+public class ReadExcel {
+	@Test
+	public static String[][] readExcel(String fileName) throws IOException {
+
+		FileInputStream file = new FileInputStream(".\\data\\"+fileName+".xlsx");
+
+		XSSFWorkbook book = new XSSFWorkbook(file);
+
+		XSSFSheet sheet = book.getSheet("Sheet1");
+
+		int rows = sheet.getLastRowNum();
+		short cells = sheet.getRow(0).getLastCellNum();
+
+		String data[][] = new String[rows][cells];
+
+		for (int i = 1; i <=rows; i++) {
+			
+			for (int j = 0; j <cells; j++) {
+
+				XSSFCell cell = sheet.getRow(i).getCell(j);
+			String cellValue = cell.getStringCellValue();
+
+				
+					data[i-1][j] = cellValue;
+			}
+	
+		}
+		
+book.close();
+return data;
+	}
+}
+
+
+
+<================================================================================>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" verbose="5">
+  <test thread-count="5" name="Test">
+    <classes>
+    <!--   <class name="learnassertion.ReadExcel"/>-->
+      <class name="learnassertion.CreateLead"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
