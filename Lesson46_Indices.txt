@@ -1,0 +1,63 @@
+package crossbrowser;
+
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+
+public class BaseClass {
+	public static RemoteWebDriver driver;
+	public String fileName;
+
+	@Parameters({ "browser" })
+	@BeforeMethod(alwaysRun = true)
+	public void beforeMethod(String browser) {
+		if (browser.equalsIgnoreCase("edge")) {
+			driver = new EdgeDriver();
+		} else if (browser.equalsIgnoreCase("chrome")) {
+			driver = new ChromeDriver();
+		} 
+		else if (browser.equalsIgnoreCase("brave")) {
+			ChromeOptions options= new ChromeOptions();
+			options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
+			driver = new ChromeDriver(options);
+		}
+		
+		
+		else {
+			driver = new FirefoxDriver();
+		}
+
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+		driver.findElement(By.className("decorativeSubmit")).click();
+		driver.findElement(By.xpath("//a[text()[normalize-space() ='CRM/SFA']]")).click();
+
+		String title = driver.getTitle();
+
+		Assert.assertEquals(title, "My Home | opentaps CRM");
+
+	}
+
+	@AfterMethod
+	public void afterMethod() {
+		driver.close();
+
+	}
+
+	@DataProvider(name = "testdata1",indices= {0,2})
+	public String[][] sendData() throws IOException {
+
+		return ReadExcel.readExcel(fileName);
+	}
+}
