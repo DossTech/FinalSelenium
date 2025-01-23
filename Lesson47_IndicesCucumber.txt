@@ -1,0 +1,31 @@
+package runner;
+
+import org.testng.annotations.DataProvider;
+
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.CucumberOptions.SnippetType;
+import stepdefinition.BaseClass;
+
+@CucumberOptions(features = {"src/test/java/features/Login.feature" },
+                                    glue = "stepdefinition", 
+                                    monochrome = true, 
+                                    dryRun = false, 
+                                    snippets = SnippetType.CAMELCASE, 
+                                    publish = true, tags = "@Functional"// executing
+																																													// a
+																																													// particular
+																																													// tag
+//tags="@Smoke"//  executing a particular tag
+//tags="@Functional or @Smoke", executing all tags
+//tags="@Functional and @Smoke" executing  tags
+//tags="not @Smoke" 
+)
+public class Runner extends BaseClass {
+
+	@DataProvider(indices = 1)
+	@Override
+	public Object[][] scenarios() {
+
+		return super.scenarios();
+	}
+}
