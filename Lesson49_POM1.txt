@@ -2,10 +2,126 @@
 
 PACKAGE:  baseclass
 =====================
+package baseclass;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+public class BaseClass {
+
+	public static RemoteWebDriver driver;
+
+	@BeforeMethod
+	public void precondition() {
+
+		driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		
+	}
+
+	@AfterMethod
+	public void postCondition() {
+		driver.close();
+
+	}
+}
 
 <===========================================================================================================================================>
 PACKAGE: pages
 ===============
+package pages;
+
+import org.openqa.selenium.By;
+
+import baseclass.BaseClass;
+
+public class LoginPage extends BaseClass {
+
+	public LoginPage enterUserName() {
+		driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+		return this;
+
+	}
+
+	public LoginPage enterPassword() {
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+		return this;
+		
+	}
+	
+	public HomePage clickLogin() {
+		driver.findElement(By.className("decorativeSubmit")).click();
+		return new HomePage();
+
+	}
+}
+--------------------------------------------------
+package pages;
+
+import org.openqa.selenium.By;
+import org.testng.Assert;
+
+import baseclass.BaseClass;
+
+public class HomePage extends BaseClass {
+
+	public MyHomePage clickCRMSFA() {
+		driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).click();
+	return new MyHomePage();
+	}
+
+	public HomePage verifyHomePage() {
+		boolean displayed = driver.findElement(By.xpath("//a[text()[normalize-space()='CRM/SFA']]")).isDisplayed();
+		Assert.assertTrue(displayed);
+		return this;
+	}
+}
+--------------------------------------------------
+package pages;
+
+import org.openqa.selenium.By;
+import org.testng.Assert;
+
+import baseclass.BaseClass;
+
+public class MyHomePage extends BaseClass {
+
+	public MyLeadsPage clickLeads() {
+		driver.findElement(By.linkText("Leads")).click();
+		return new MyLeadsPage();
+	}
+	
+	public MyHomePage verifyMyHomePage() {
+		boolean displayed = driver.findElement(By.linkText("Leads")).isDisplayed();
+		Assert.assertTrue(displayed);
+		return this;
+
+	}
+}
+---------------------------------------------------
+package pages;
+
+import org.openqa.selenium.By;
+
+import baseclass.BaseClass;
+
+public class MyLeadsPage extends BaseClass{
+
+	public CreateLeadPage clickCreateLead() {
+		
+		driver.findElement(By.linkText("Create Lead")).click();
+           return new CreateLeadPage();
+	}
+	
+}
+--------------------------------------------------
+
 
 <===========================================================================================================================================>
 PACKAGE: testcases
