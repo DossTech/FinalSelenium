@@ -1,10 +1,20 @@
-POM:
+POM:PageObjectModel//Pattern Object Model
 ====
 Its a design pattern used to build a framework
 Framework: Its real / conceptual str. used to help in product development
+
+
 Easy Maintenance
 Increased productivity
 Maintain uniformity
 Reduce duplicated code
-Support for multi-lingual 
+Support for multi-lingual application
 Better Reporting
+
+
+
+
+
+
+
+
