@@ -11,6 +11,42 @@ Reduce duplicated code
 Support for multi-lingual application
 Better Reporting
 
+LoginPage
+HomePage
+MyHomePage
+LeadsPage
+CreateLeadPage
+ViewLeadPage
+
+Steps to follow in POM:
+----------------------
+1.Create individual           major|minor|maintain
+
+
+Dependencies:
+============
+1.SeleniumWebDriver
+2.WebDriverMAnager
+3.TestNG
+4.Cucumber
+5.POi
+6.Apachipoi
+
+
+Steps to follow in POM:
+----------------------
+1.Create a BaseClass
+2.Create individual Class for all web pages
+3.Extends each pages with BC
+4.Create methods for each and every actions
+5.Return the Page Object where it actually lands
+6.Create test cases which extends BC
+
+
+
+
+
+
 
 
 
