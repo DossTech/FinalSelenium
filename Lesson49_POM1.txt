@@ -121,10 +121,109 @@ public class MyLeadsPage extends BaseClass{
 	
 }
 --------------------------------------------------
+package pages;
+
+import org.openqa.selenium.By;
+
+import baseclass.BaseClass;
+
+public class CreateLeadPage extends BaseClass {
+
+	public CreateLeadPage enterCompanyName() {
+		driver.findElement(By.id("createLeadForm_companyName")).sendKeys("VBC");
+		return this;
+	}
+
+	public CreateLeadPage enterFirstName() {
+		driver.findElement(By.id("createLeadForm_firstName")).sendKeys("firstName1");
+		return this;
+	}
+
+	public CreateLeadPage enterLastName() {
+
+		driver.findElement(By.id("createLeadForm_lastName")).sendKeys("lastName1");
+		return this;
+	}
+	
+	public ViewLeadPage clickCreateLeadButton() {
+		driver.findElement(By.name("submitButton")).click();
+		return new ViewLeadPage();
+	}
+
+}
+----------------------------------------------------------
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import baseclass.BaseClass;
+
+public class ViewLeadPage extends BaseClass{
+
+	public ViewLeadPage verifyViewLeadPage() {
+		 boolean displayed = driver.findElement(By.id("viewLead_companyName_sp")).isDisplayed();
+		 Assert.assertTrue(displayed);
+		 return this;
+	}
+}
 
 
 <===========================================================================================================================================>
 PACKAGE: testcases
 ===================
+package testcases;
+
+import org.testng.annotations.Test;
+
+import baseclass.BaseClass;
+import pages.LoginPage;
+
+public class VerifyLogin extends BaseClass{
+    @Test
+	public void verifyLoginPage() {
+	LoginPage lp = 	new LoginPage();
+		lp.enterUserName().
+		enterPassword().
+		clickLogin().
+		verifyHomePage().
+		clickCRMSFA().
+		verifyMyHomePage().
+		clickLeads().
+		clickCreateLead();
+		
+	}
+
+}
+-------------------------------------------------------------
+package testcases;
+
+import org.testng.annotations.Test;
+
+import baseclass.BaseClass;
+import pages.LoginPage;
+
+public class CreateLead extends BaseClass{
+
+	@Test
+	public void runCreateLead() {
+		new LoginPage()
+		.enterUserName()
+		.enterPassword()
+		.clickLogin()
+		.verifyHomePage()
+		.clickCRMSFA()
+		.verifyMyHomePage()
+		.clickLeads()
+		.clickCreateLead()
+		.enterCompanyName()
+		.enterFirstName()
+		.enterLastName()
+		.clickCreateLeadButton()
+		.verifyViewLeadPage();
+
+	}
+}
 
 <===========================================================================================================================================>
