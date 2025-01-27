@@ -41,6 +41,9 @@ Steps to follow in POM:
 4.Create methods for each and every actions
 5.Return the Page Object where it actually lands
 6.Create test cases which extends BC
+    6.1.Create object in testcases - call the methods in pages
+    6.2 use this() keyword, ...
+    
 
 
 
