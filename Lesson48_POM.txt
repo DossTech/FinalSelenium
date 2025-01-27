@@ -43,6 +43,7 @@ Steps to follow in POM:
 6.Create test cases which extends BC
     6.1.Create object in testcases - call the methods in pages
     6.2 use this() keyword, ...
+
     
 
 
